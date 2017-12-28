@@ -631,42 +631,40 @@ class LeptoCalc(object):
         ys, _      = odeintw(self.RHS_2DS_DM, y0, self.xs, args = tuple([_ETA, _C , _K, _W]), full_output=1)
         nb      = np.real(0.013*(ys[-1,2]+ys[-1,3]+ys[-1,4]))
 
-        if self.controlplots:
-            X=_["tcur"]
-            N1     =ys[:,0][0:-1]
-            N2     =ys[:,1][0:-1]
-            Nee    =ys[:,2][0:-1]
-            Nmumu  =ys[:,3][0:-1]
-            Ntautau=ys[:,4][0:-1]
+        X=_["tcur"]
+        N1     =ys[:,0][0:-1]
+        N2     =ys[:,1][0:-1]
+        Nee    =ys[:,2][0:-1]
+        Nmumu  =ys[:,3][0:-1]
+        Ntautau=ys[:,4][0:-1]
 
 
-            import pylab
-            pylab.clf()
-            self.writeTXT(X, np.absolute(Nee),     "Nee.dat" )
-            self.writeTXT(X, np.absolute(Nmumu),   "Nuu.dat" )
-            self.writeTXT(X, np.absolute(Ntautau), "Ntt.dat" )
+        import pylab
 
-            pylab.plot(X, np.absolute(Nee), label="|Nee|"        , color="r")
-            pylab.plot(X, np.absolute(Nmumu), label="|Nmumu|"    , color="g")
-            pylab.plot(X, np.absolute(Ntautau), label="|Ntautau|", color="b")
+        pylab.plot(X, np.absolute(Nee), label="|Nee|"        , color="r")
+        pylab.plot(X, np.absolute(Nmumu), label="|Nmumu|"    , color="g")
+        pylab.plot(X, np.absolute(Ntautau), label="|Ntautau|", color="b")
 
-            pylab.legend()
-            pylab.xscale("log")
-            pylab.yscale("log")
-            pylab.xlim((self.xmin,self.xmax))
-            pylab.savefig(self.plotprefix+"nevol.png")
+        pylab.legend()
+        pylab.ylabel("|N|")
+        pylab.xlabel("z")
+        pylab.xscale("log")
+        pylab.yscale("log")
+        pylab.xlim((self.xmin,self.xmax))
+
+        pylab.show()
 
 
 
-            pylab.clf()
-            pylab.plot(X, np.absolute(Nee+Nmumu+Ntautau), label="2 dec. st. (DM) eta=%e"%nb, color="b")
-            pylab.legend()
-            pylab.xlabel("Eta")
-            pylab.xscale("log")
-            pylab.yscale("log")
-            pylab.xlim((self.xmin,self.xmax))
-            pylab.savefig(self.plotprefix+"etaevol.png")
+        pylab.plot(X, np.absolute(Nee+Nmumu+Ntautau), label="2 dec. st. (DM) eta=%e"%nb, color="b")
+        pylab.legend()
+        pylab.ylabel("eta")
+        pylab.xlabel("z")
+        pylab.xscale("log")
+        pylab.yscale("log")
+        pylab.xlim((self.xmin,self.xmax))
 
+        pylab.show()
 
 
         return nb
@@ -700,41 +698,40 @@ class LeptoCalc(object):
         ys, _      = odeintw(self.RHS_1DS_DM, y0, self.xs, args = tuple(params), full_output=1)
         nb      = 0.013*(ys[-1,1]+ys[-1,2]+ys[-1,3]).real
 
-        if self.controlplots:
-            X=_["tcur"]
-            # ys=np.absolute(ys)
-            N1     =ys[:,0][0:-1]
-            Nee    =ys[:,1][0:-1]
-            Nmumu  =ys[:,2][0:-1]
-            Ntautau=ys[:,3][0:-1]
+        X=_["tcur"]
+        # ys=np.absolute(ys)
+        N1     =ys[:,0][0:-1]
+        Nee    =ys[:,1][0:-1]
+        Nmumu  =ys[:,2][0:-1]
+        Ntautau=ys[:,3][0:-1]
 
 
-            import pylab
-            pylab.clf()
-            #
-            self.writeTXT(X, np.absolute(Nee),     "Nee.dat" )
-            self.writeTXT(X, np.absolute(Nmumu),   "Nuu.dat" )
-            self.writeTXT(X, np.absolute(Ntautau), "Ntt.dat" )
+        import pylab
+        fig, ax = pylab.subplots()
 
-            pylab.plot(X, np.absolute(Nee), label="|Nee|"        , color="r")
-            pylab.plot(X, np.absolute(Nmumu), label="|Nmumu|"    , color="g")
-            pylab.plot(X, np.absolute(Ntautau), label="|Ntautau|", color="b")
+        pylab.plot(X, np.absolute(Nee), label="|Nee|"        , color="r")
+        pylab.plot(X, np.absolute(Nmumu), label="|Nmumu|"    , color="g")
+        pylab.plot(X, np.absolute(Ntautau), label="|Ntautau|", color="b")
 
-            pylab.legend()
-            pylab.xscale("log")
-            pylab.yscale("log")
-            pylab.xlim((self.xmin,self.xmax))
-            pylab.savefig(self.plotprefix+"nevol.png")
+        pylab.legend()
+        pylab.xlabel("z")
+        pylab.ylabel("|N|")
+        pylab.xscale("log")
+        pylab.yscale("log")
+        pylab.xlim((self.xmin,self.xmax))
+        pylab.show()
 
 
-            pylab.clf()
-            pylab.plot(X.real, Nee.real+Nmumu.real+Ntautau.real, label="1 dec. st. (DM) eta=%e"%nb, color="b")
-            pylab.legend()
-            pylab.xlabel("Eta")
-            pylab.xscale("log")
-            pylab.yscale("log")
-            pylab.xlim((self.xmin,self.xmax))
-            pylab.savefig(self.plotprefix+"etaevol.png")
+        pylab.clf()
+        pylab.plot(X.real, Nee.real+Nmumu.real+Ntautau.real, label="1 dec. st. (DM) eta=%e"%nb, color="b")
+        pylab.legend()
+        pylab.xlabel("z")
+        pylab.ylabel("eta")
+        pylab.xscale("log")
+        pylab.yscale("log")
+        pylab.xlim((self.xmin,self.xmax))
+        pylab.show()
+
         return nb
 
     @property
