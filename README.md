@@ -1,5 +1,5 @@
 # leptotherm
-Thermal leptogenesis calculation of the publiction "How low can thermal leptogenesis go".
+Thermal leptogenesis calculation of the publication "How low can thermal leptogenesis go".
 
 This code uses Warren Weckesser's [odeintw package](https://github.com/WarrenWeckesser/odeintw) to 
 solve complex ODEs.
